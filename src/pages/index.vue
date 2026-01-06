@@ -1,15 +1,15 @@
 <template>
   <div v-if="!sideBarLoading" class="w-full h-full flex overflow-hidden gap-x-2">
     <SideBar v-model="movies" v-model:loading="loading" v-model:list="data" />
-    <div v-if="!loading" class="flex-1 flex flex-col gap-y-2">
+    <div class="flex-1 flex flex-col gap-y-2">
       <div class="flex gap-x-2 self-end">
-        <Search v-model="movies" />
+        <Search v-model="movies" v-model:loading="loading" />
         <modeToggle />
       </div>
-      <videoList v-model="movies" />
-    </div>
-    <div v-else class="relative flex-1">
-      <Loading class="absolute top-1/2 left-1/2 -translate-1/2" />
+      <videoList v-if="!loading" v-model="movies" />
+      <div v-else class="relative flex-1">
+        <Loading class="absolute top-1/2 left-1/2 -translate-1/2" />
+      </div>
     </div>
   </div>
   <Loading v-else class="absolute top-1/2 left-1/2 -translate-1/2" />

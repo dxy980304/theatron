@@ -3,11 +3,8 @@
     <div
       v-for="i in data"
       :key="i.type_id"
-      class="py-1 box-border cursor-pointer hover:text-lg hover:text-[#f54a15] transition-all"
-      :class="{
-        'text-lg': i.type_id === s.t,
-        'text-[#f54a15]': i.type_id === s.t,
-      }"
+      class="py-2 box-border cursor-pointer text-base hover:text-[#f54a15]"
+      :class="{ 'text-[#f54a15]': i.type_id === s.t }"
       @click="getCategory(i.type_id)"
     >
       {{ i.type_name }}

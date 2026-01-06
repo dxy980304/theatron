@@ -1,10 +1,16 @@
 <template>
   <InputGroup>
-    <InputGroupInput placeholder="搜你想看的" v-model="keywords" />
+    <InputGroupInput
+      placeholder="搜你想看的"
+      v-model="keywords"
+      :disabled="loading"
+      @keydown.enter="search"
+    />
     <InputGroupAddon align="inline-end">
       <InputGroupButton
         variant="secondary"
         class="cursor-pointer hover:text-green-400"
+        :disabled="loading"
         @click="search"
       >
         <SearchIcon />
@@ -27,18 +33,24 @@ import { useStore } from '@/store/useStore'
 const { setKeyWords, setTypeId } = useStore()
 
 const data = defineModel()
+const loading = defineModel('loading')
 
 const keywords = ref('')
 
 async function search() {
-  data.value = {}
-  if (!keywords.value) {
-    setTypeId('all')
-  } else {
-    setTypeId('')
+  try {
+    data.value = {}
+    if (!keywords.value) {
+      setTypeId('all')
+    } else {
+      setTypeId('')
+    }
+    setKeyWords(keywords.value)
+    loading.value = true
+    const res = await getKeyWordsList(keywords.value)
+    data.value = res
+  } finally {
+    loading.value = false
   }
-  setKeyWords(keywords.value)
-  const res = await getKeyWordsList(keywords.value)
-  data.value = res
 }
 </script>
