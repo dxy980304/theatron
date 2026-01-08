@@ -12,24 +12,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getCategoryList } from '@/api/get'
 import { useStore } from '@/store/useStore'
 
+const emit = defineEmits(['search'])
 const data = defineModel<Array<{ type_id: string; type_name: string }>>('list')
-const movies = defineModel()
-const loading = defineModel('loading')
 
 const s = useStore()
 
 async function getCategory(t: string) {
-  try {
-    loading.value = true
-    movies.value = []
-    s.setTypeId(t)
-    const res = await getCategoryList(t)
-    movies.value = res
-  } finally {
-    loading.value = false
-  }
+  s.setTypeId(t)
+  s.setKeyWords('')
+  emit('search')
 }
 </script>

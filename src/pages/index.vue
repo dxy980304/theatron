@@ -1,6 +1,6 @@
 <template>
   <div v-if="!sideBarLoading" class="w-full h-full flex overflow-hidden gap-x-2">
-    <SideBar v-model="movies" v-model:loading="loading" v-model:list="data" />
+    <SideBar v-model:list="data" @search="search(true)" />
     <div class="flex-1 flex flex-col gap-y-2">
       <div class="flex gap-x-2 self-end">
         <Search @search="search(true)" />
@@ -13,6 +13,7 @@
         <Loading class="absolute top-1/2 left-1/2 -translate-1/2" />
       </div>
       <Pagination
+        v-if="movies.total > 0"
         ref="paginationRef"
         :total="movies.total"
         :items-per-page="movies.limit"
@@ -45,11 +46,15 @@ const sideBarLoading = ref(false)
 
 async function search(flag = false) {
   try {
-    if (flag) {
+    if (flag && paginationRef.value) {
       paginationRef.value!.currentPage = 1
     }
     loading.value = true
-    const res = await getDetail({ pg: paginationRef.value!.currentPage, wd: s.wd })
+    const res = await getDetail({
+      t: s.t === 'all' ? '' : s.t,
+      pg: paginationRef.value ? paginationRef.value!.currentPage : 1,
+      wd: s.wd,
+    })
     movies.value = res
   } finally {
     loading.value = false
@@ -62,6 +67,8 @@ async function getList() {
     const res = await getSideBarList()
     const resp = await getDetail()
     res.class.unshift({ type_id: 'all', type_name: '首页' })
+    //type_id为1、2、3、4没数据过滤掉
+    res.class = res.class.filter((i: any) => !['1', '2', '3', '4'].includes(i.type_id))
     data.value = res.class
     movies.value = resp
   } finally {

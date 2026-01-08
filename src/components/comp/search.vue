@@ -19,7 +19,7 @@
   </InputGroup>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { SearchIcon } from 'lucide-vue-next'
 import {
   InputGroup,
@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/input-group'
 import { useStore } from '@/store/useStore'
 
-const { setKeyWords, setTypeId } = useStore()
+const s = useStore()
 
 const emit = defineEmits<{ (e: 'search'): void }>()
 const data = defineModel()
@@ -41,14 +41,21 @@ async function search() {
   try {
     data.value = {}
     if (!keywords.value) {
-      setTypeId('all')
+      s.setTypeId('all')
     } else {
-      setTypeId('')
+      s.setTypeId('')
     }
-    setKeyWords(keywords.value)
+    s.setKeyWords(keywords.value)
     emit('search')
   } finally {
     loading.value = false
   }
 }
+watch(
+  () => s.wd,
+  () => {
+    keywords.value = s.wd
+  },
+  { deep: true },
+)
 </script>
