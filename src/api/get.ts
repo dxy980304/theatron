@@ -23,9 +23,9 @@ export const getCategoryList = async (t: string) => {
   return res.data
 }
 
-export const getDetail = async () => {
+export const getDetail = async (p = { pg: 1, wd: '' }) => {
   const res = await http.get(url, {
-    params: { ac: 'detail' },
+    params: { ac: 'detail', pg: p.pg, wd: p.wd },
   })
   return res.data
 }

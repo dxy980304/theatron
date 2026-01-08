@@ -27,11 +27,11 @@ import {
   InputGroupAddon,
   InputGroupButton,
 } from '@/components/ui/input-group'
-import { getKeyWordsList } from '@/api/get'
 import { useStore } from '@/store/useStore'
 
 const { setKeyWords, setTypeId } = useStore()
 
+const emit = defineEmits<{ (e: 'search'): void }>()
 const data = defineModel()
 const loading = defineModel('loading')
 
@@ -46,9 +46,7 @@ async function search() {
       setTypeId('')
     }
     setKeyWords(keywords.value)
-    loading.value = true
-    const res = await getKeyWordsList(keywords.value)
-    data.value = res
+    emit('search')
   } finally {
     loading.value = false
   }

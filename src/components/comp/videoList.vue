@@ -11,7 +11,6 @@
       >
         <NImage
           class="flex-1 rounded"
-          lazy
           width="100%"
           height="100%"
           object-fit="cover"

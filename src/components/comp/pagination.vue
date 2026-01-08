@@ -1,0 +1,48 @@
+<template>
+  <Pagination
+    v-slot="{ page }"
+    :items-per-page="props.itemsPerPage"
+    :total="props.total"
+    v-model:page="currentPage"
+    @update:page="emit('search')"
+  >
+    <PaginationContent v-slot="{ items }">
+      <PaginationFirst />
+      <PaginationPrevious />
+      <template v-for="(item, index) in items" :key="index">
+        <PaginationItem
+          v-if="item.type === 'page'"
+          :value="item.value"
+          :is-active="item.value === page"
+        >
+          {{ item.value }}
+        </PaginationItem>
+      </template>
+      <PaginationNext />
+      <PaginationLast />
+    </PaginationContent>
+  </Pagination>
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationFirst,
+  PaginationLast,
+} from '@/components/ui/pagination'
+
+const emit = defineEmits<{
+  (e: 'search'): void
+}>()
+const props = defineProps(['total', 'itemsPerPage'])
+
+const currentPage = ref(1)
+
+defineExpose({
+  currentPage,
+})
+</script>
