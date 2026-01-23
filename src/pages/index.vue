@@ -1,7 +1,7 @@
 <template>
-  <div v-if="!sideBarLoading" class="w-full h-full flex overflow-hidden gap-x-2">
+  <div v-if="!sideBarLoading" class="w-full h-full flex flex-col overflow-hidden gap-x-2 sm:flex-row">
     <SideBar v-model:list="data" @search="search(true)" />
-    <div class="flex-1 flex flex-col gap-y-2">
+    <div class="flex-1 flex flex-col gap-y-2 overflow-auto">
       <div class="flex gap-x-2 self-end">
         <Search @search="search(true)" />
         <modeToggle />
