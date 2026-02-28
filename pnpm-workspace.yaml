@@ -1,0 +1,9 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - core-js
+  - es5-ext
+  - esbuild
+  - netlify-cli
+  - sharp
+  - unix-dgram
+  - vue-demi

@@ -12,7 +12,7 @@
     </div>
     <div class="overflow-y-auto scroll-container-show">
       <div v-if="btnList.length" class="w-9/10 mx-auto">
-        <Video v-if="active" class="mb-4" :url="active" />
+        <Video v-if="active" class="mb-4" v-model:url="active" :episodeList="btnList" />
       </div>
       <Card class="rounded-md py-3" v-if="btnList.length">
         <CardContent class="px-3">

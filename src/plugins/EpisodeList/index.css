@@ -1,0 +1,66 @@
+.xgplayer-episode-btn {
+  position: relative;
+  cursor: pointer;
+  width: 30px;
+  margin-right: 16px;
+}
+.xgplayer-icon-episode-list {
+  width: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  word-break: break-all;
+}
+.xgplayer-episode-panel {
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+}
+.episode-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  max-height: min(280px, 40vh);
+  overflow-y: auto;
+}
+
+.episode-item {
+  width: max-content;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 4px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.episode-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.episode-item.active {
+  color: #00a1d6;
+  background: rgba(0, 161, 214, 0.2);
+}
+
+.episode-item {
+  text-align: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.episode-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.episode-item.active {
+  background: #00a1d6;
+  color: #fff;
+}
